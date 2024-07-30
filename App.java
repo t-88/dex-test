@@ -1,8 +1,11 @@
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.URLConnection;
 
 
 
@@ -11,45 +14,25 @@ class Dexer {
 
   }
 }
-
-class NetworkClassLoader extends ClassLoader {
-  String host;
-  int port;
-
-  public Class findClass(String name) {
-    ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-    try {
-      FileInputStream fis = new FileInputStream(name);
-      int data = fis.read();
-      while (data != -1) {
-        buffer.write(data);
-        data = fis.read();
-      }
-
-      fis.close();
-
-    } catch (Exception e) {
-
-    }
-    byte[] classData = buffer.toByteArray();
-    System.out.println("asdlkaskdkjasd");
-    return defineClass(classData, 0, classData.length);
-  }
-
-}
-
 class A {
   public void B() {
     try {
       ClassLoader loader = URLClassLoader.newInstance(
-        new URL[] { new File("./Dex.jar").toURI().toURL() },
+        // new URL[] { new File("./Dex.jar").toURI().toURL() },
+        new URL[] { new URL("http://0.0.0.0:3333/Dex.class") },
         getClass().getClassLoader());
+
+        String a[] = {};
         Class<?> clazz = Class.forName("Dex", true, loader);
-        Class<? extends Dexer> runClass = clazz.asSubclass(Dexer.class);
-        runClass.newInstance().main();
+        Method m = clazz.getMethod("main",  new Class[] { a.getClass()  });
+        m.setAccessible(true);
+        m.invoke(null, new Object[] { a });
+        // Class<? extends Dexer> runClass = clazz.asSubclass(Dexer.class);
+        // runClass.newInstance().main();
 
     } catch(Exception e) {
-      System.err.println("ASDASDASD");
+      System.out.println("ASDASDASD");
+      System.out.println(e.getMessage());
     }
   }
 }

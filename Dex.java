@@ -1,12 +1,6 @@
 
-class Dexer   {
-    public void main() {
-
-    }
-}
-
-public class Dex extends Dexer {
-    public void main() {
+public class Dex {
+    public static  void main(String[] args) {
         System.out.println("LOL");
     }
 }
