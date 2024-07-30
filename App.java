@@ -19,7 +19,7 @@ class A {
     try {
       ClassLoader loader = URLClassLoader.newInstance(
         // new URL[] { new File("./Dex.jar").toURI().toURL() },
-        new URL[] { new URL("http://0.0.0.0:3333/Dex.class") },
+        new URL[] { new URL("https://github.com/t-88/dex-test/raw/master/Dex.class") },
         getClass().getClassLoader());
 
         String a[] = {};
