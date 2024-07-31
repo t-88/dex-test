@@ -14,6 +14,7 @@ class Dexer {
 
   }
 }
+
 class A {
   public void B() {
     try {
